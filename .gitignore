@@ -34,4 +34,4 @@ backend.tf
 terraform.tfvars
 
 # custom
-azure-container-instance/vault-server.hcl
+azure-container-instances/vault-server.hcl

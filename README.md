@@ -12,7 +12,7 @@ HashiCorp's products makes this possible by offering binaries for all sorts of a
 
 **NOTE:** I am once again building my own Vault Docker image because I wanted to learn how the IAM piece works with Azure and also using their managed [Azure Container Registry](https://azure.microsoft.com/en-us/services/container-registry/).  You can just as easily use the HashiCorp provided Docker image when deploying your ACI.
 
-This repo contains Terraform code that will deploy the required underlying infrastructure (Container Registry, Storage, Key Vault for auto-unseal), but the user will have to perform some tasks via the [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli), `az`.  The details of those command can be found [here](./azure-container-registry/README.md)
+This repo contains Terraform code that will deploy the required underlying infrastructure (Container Registry, Storage, Key Vault for auto-unseal), but the user will have to perform some tasks via the [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli), `az`.  The details of those command can be found [here](./azure-container-instances/README.md)
 
 
 ## How the Services are used

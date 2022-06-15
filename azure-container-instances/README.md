@@ -101,5 +101,5 @@ az container delete --resource-group ${RG_NAME} --name ${ACI_NAME}
 terraform destroy -auto-approve
 ```
 
-**NOTE:** you may encounter an error with deleting the AKV key, but running the destroy command again will complete the second time.  I don't use Azure enough to know whether this is a known bug with Azure itself or if it's Terrafor (or both!)
+**NOTE:** you may encounter an error with deleting the AKV key, but running the destroy command again will complete the second time.  I don't use Azure enough to know whether this is a known bug with Azure itself or if it's Terraform (or both!)
 

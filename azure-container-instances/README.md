@@ -96,7 +96,7 @@ az container delete --resource-group ${RG_NAME} --name ${ACI_NAME}
 ```
 
 
-#### 2
+#### 2 - Destroy Resources
 ```
 terraform destroy -auto-approve
 ```

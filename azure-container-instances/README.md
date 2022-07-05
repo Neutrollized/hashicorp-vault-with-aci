@@ -86,7 +86,7 @@ curl -s -X PUT ${VAULT_ADDR}/v1/sys/init --data @init.json
 ```
 
 ## IMPORTANT!!
-Azure Container Instances does not support/provide a managed SSL cert option (which GCP and AWS do) and so I purposely opted *not* to use a self-signed cert and use HTTP to highly this shortcoming. 
+Azure Container Instances does not support/provide a managed SSL cert option (which GCP does) and so I purposely opted *not* to use a self-signed cert and use HTTP to highlight this shortcoming.  You can always purchase a cert through the cloud provider, but it will incur extra costs.
 
 
 ## Clean up

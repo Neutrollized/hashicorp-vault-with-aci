@@ -87,7 +87,7 @@ resource "azurerm_key_vault" "vault_akv" {
     object_id = data.azurerm_client_config.current.object_id
 
     key_permissions = [
-      "Get", "List", "Create", "Delete", "Update", "WrapKey", "UnwrapKey",
+      "Get", "List", "Create", "Delete", "Update", "WrapKey", "UnwrapKey", "Purge",
     ]
   }
 }

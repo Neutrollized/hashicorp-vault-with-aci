@@ -12,7 +12,7 @@ az storage file upload --account-name ${STORAGE_ACCOUNT_NAME} --share-name ${STO
 
 #### 1 - Build the Image
 ```
-az acr build --image vault:1.10.4 --registry ${ACR_NAME} --file Dockerfile . 
+az acr build --image vault:1.11.2 --registry ${ACR_NAME} --file Dockerfile . 
 ```
 
 - example output:
@@ -35,7 +35,7 @@ Waiting for an agent...
 - image:
     registry: vaultacrac447bf6.azurecr.io
     repository: vault
-    tag: 1.10.4
+    tag: 1.11.2
     digest: sha256:4b0e51757931ed23b784676603fc29064cda34a8bbe137da93dd077af87c7ad9
   runtime-dependency:
     registry: registry.hub.docker.com
@@ -61,7 +61,7 @@ Run ID: cw1 was successful after 37s
 ```
 az container create --resource-group ${RG_NAME} \
   --name ${ACI_NAME} \
-  --image ${ACR_NAME}/vault:1.10.4 \
+  --image ${ACR_NAME}/vault:1.11.2 \
   --acr-identity ${USER_ASSIGNED_IDENTITY} \
   --command-line '/vault server -config /etc/vault/vault-server.hcl' \
   --dns-name-label ${ACI_NAME} \
@@ -101,5 +101,4 @@ az container delete --resource-group ${RG_NAME} --name ${ACI_NAME}
 terraform destroy -auto-approve
 ```
 
-**NOTE:** you may encounter an error with deleting the AKV key, but running the destroy command again will complete the second time.  I don't use Azure enough to know whether this is a known bug with Azure itself or if it's Terraform (or both!)
-
+**NOTE:** you may encounter an error with deleting the AKV key, but running the destroy command again will complete the second time.  I don't use Azure enough to know whether this is a known bug with Azure itself or if it's Terraform (or both!) -- this is fixed in v0.2.0+

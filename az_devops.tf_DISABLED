@@ -1,0 +1,17 @@
+# NOTE: requires an Azure DevOps organization to be created first
+# https://docs.microsoft.com/en-us/azure/devops/organizations/accounts/create-organization?view=azure-devops
+# https://registry.terraform.io/providers/microsoft/azuredevops/latest/docs/resources/project
+resource "azuredevops_project" "vault-project" {
+  name            = "vault"
+  description     = "HashiCorp Vault on Azure Container Instances"
+  visibility      = "private"
+  version_control = "Git"
+
+  features = {
+    "boards"       = "disabled"
+    "repositories" = "disabled"
+    "pipelines"    = "enabled"
+    "testplans"    = "disabled"
+    "artifacts"    = "disabled"
+  }
+}

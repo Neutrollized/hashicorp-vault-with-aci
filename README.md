@@ -27,3 +27,6 @@ Used for [auto-unseal](https://www.vaultproject.io/docs/concepts/seal#auto-unsea
 
 ### Container Instances
 Where the Vault binary will be run from.  
+
+### Azure DevOps (optional, currently DISABLED)
+You will have to [create an organization](https://docs.microsoft.com/en-us/azure/devops/organizations/accounts/create-organization?view=azure-devops) first and by default it woud be your username.  Azure is not my forte, but from what I learned playing around with [Azure Pipelines](https://azure.microsoft.com/en-us/services/devops/pipelines/), you will need a file in your repo called `azure-pipelines.yaml`, except there's a lot of information that gets put in there that I wouldn't really be that comfortable putting in from an overall security point of view.  So while I do have the a block of code here dedicated to setting up Azure DevOps for the building and deployment of the Vault ACI, I'm opting to leave it as DISABLED -- but for those of you have have more knowledge in the Azure DevOps domain, please feel free to make PR to educate me on how best to approach this.

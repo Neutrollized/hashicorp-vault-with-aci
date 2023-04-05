@@ -80,8 +80,9 @@ resource "azurerm_key_vault" "vault_akv" {
     object_id = azurerm_user_assigned_identity.vault_user.principal_id
 
     key_permissions = [
-      #      "Get", "List", "Create", "Delete", "Update", "WrapKey", "UnwrapKey",
-      "Get", "WrapKey", "UnwrapKey",
+      "Get",
+      "WrapKey",
+      "UnwrapKey",
     ]
   }
 
@@ -94,11 +95,7 @@ resource "azurerm_key_vault" "vault_akv" {
       "Delete",
       "Get",
       "List",
-      #      "Purge",
-      #      "Recover",
       "Update",
-      #      "GetRotationPolicy",
-      #      "SetRotationPolicy",
     ]
   }
 

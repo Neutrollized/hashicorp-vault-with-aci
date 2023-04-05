@@ -1,2 +1,2 @@
-location      = "canadaeast"
-vault_version = "1.10.4"
+location      = "westus2"
+vault_version = "1.13.1"

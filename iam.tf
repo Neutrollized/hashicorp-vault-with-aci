@@ -13,3 +13,15 @@ resource "azurerm_role_assignment" "vault_user_acr" {
   role_definition_name = "Reader"
   principal_id         = azurerm_user_assigned_identity.vault_user.principal_id
 }
+
+resource "azurerm_role_assignment" "vault_user_akv_secrets_user" {
+  scope                = azurerm_key_vault.vault_akv.id
+  role_definition_name = "Key Vault Secrets User"
+  principal_id         = azurerm_user_assigned_identity.vault_user.principal_id
+}
+
+resource "azurerm_role_assignment" "vault_user_akv_crypto_user" {
+  scope                = azurerm_key_vault.vault_akv.id
+  role_definition_name = "Key Vault Crypto User"
+  principal_id         = azurerm_user_assigned_identity.vault_user.principal_id
+}

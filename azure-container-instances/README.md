@@ -85,6 +85,8 @@ export VAULT_ADDR="http://${ACI_NAME}.${AZURE_LOCATION}.azurecontainer.io:8200"
 curl -s -X PUT ${VAULT_ADDR}/v1/sys/init --data @init.json
 ```
 
+**NOTE:** it may take a few minutes for the provided URL to resolve, so if initialization doesn't work initially, wait a little and then try again
+
 ## IMPORTANT!!
 Azure Container Instances does not support/provide a managed SSL cert option (which GCP does) and so I purposely opted *not* to use a self-signed cert and use HTTP to highlight this shortcoming.  You can always purchase a cert through the cloud provider, but it will incur extra costs.
 
@@ -95,10 +97,9 @@ Azure Container Instances does not support/provide a managed SSL cert option (wh
 az container delete --resource-group ${RG_NAME} --name ${ACI_NAME}
 ```
 
-
 #### 2 - Destroy Resources
 ```
 terraform destroy -auto-approve
 ```
 
-**NOTE:** you may encounter an error with deleting the AKV key, but running the destroy command again will complete the second time.  I don't use Azure enough to know whether this is a known bug with Azure itself or if it's Terraform (or both!) -- this is fixed in v0.2.0+
+**NOTE:** you may encounter an error with deleting the AKV key, but running the destroy command again will complete the second time. I don't use Azure enough to know whether this is a known bug with Azure itself or if it's Terraform (or both!)

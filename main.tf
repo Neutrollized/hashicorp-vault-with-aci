@@ -8,6 +8,8 @@ resource "azurerm_resource_group" "vault_rg" {
   location = var.location
 }
 
+data "azurerm_subscription" "primary" {}
+
 data "azurerm_client_config" "current" {}
 
 
@@ -78,7 +80,8 @@ resource "azurerm_key_vault" "vault_akv" {
     object_id = azurerm_user_assigned_identity.vault_user.principal_id
 
     key_permissions = [
-      "Get", "List", "Create", "Delete", "Update", "WrapKey", "UnwrapKey",
+      #      "Get", "List", "Create", "Delete", "Update", "WrapKey", "UnwrapKey",
+      "Get", "WrapKey", "UnwrapKey",
     ]
   }
 
@@ -87,8 +90,21 @@ resource "azurerm_key_vault" "vault_akv" {
     object_id = data.azurerm_client_config.current.object_id
 
     key_permissions = [
-      "Get", "List", "Create", "Delete", "Update", "WrapKey", "UnwrapKey", "Purge",
+      "Create",
+      "Delete",
+      "Get",
+      "List",
+      #      "Purge",
+      #      "Recover",
+      "Update",
+      #      "GetRotationPolicy",
+      #      "SetRotationPolicy",
     ]
+  }
+
+  network_acls {
+    default_action = "Allow"
+    bypass         = "AzureServices"
   }
 }
 

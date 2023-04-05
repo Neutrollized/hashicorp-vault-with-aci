@@ -40,6 +40,6 @@ EOT
 output "_3_initialize_vault" {
   value = <<EOT
 export VAULT_ADDR="http://${var.vault_name}.${var.location}.azurecontainer.io:8200"
-curl -s -X PUT $${VAULT_ADDR}/v1/sys/init --data @azure-container-instances/init.json
+curl -s -X POST $${VAULT_ADDR}/v1/sys/init --data @init.json
 EOT
 }

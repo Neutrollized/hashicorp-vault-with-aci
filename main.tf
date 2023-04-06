@@ -33,7 +33,6 @@ resource "azurerm_container_registry" "vault_acr" {
 }
 
 
-
 #---------------------------
 # Storage Account
 #---------------------------
@@ -119,4 +118,25 @@ resource "azurerm_key_vault_key" "vault_key" {
     "verify",
     "wrapKey",
   ]
+}
+
+
+#--------------------------------------
+# Vault Server Config Templating
+#--------------------------------------
+
+data "template_file" "vault_server_config" {
+  template = file("./azure-container-instances/vault-server.hcl.tpl")
+  vars = {
+    az_storage_account_name   = "${azurerm_storage_account.vault_storage_account.name}"
+    az_storage_account_key    = "${nonsensitive(azurerm_storage_account.vault_storage_account.primary_access_key)}"
+    az_storage_container_name = "${azurerm_storage_container.vault_data.name}"
+  }
+}
+
+# https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file
+resource "local_file" "rendered_vault_config" {
+  content         = data.template_file.vault_server_config.rendered
+  filename        = "./azure-container-instances/vault-server.hcl"
+  file_permission = "0644"
 }

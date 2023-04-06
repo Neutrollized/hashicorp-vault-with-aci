@@ -1,15 +1,3 @@
-output "_0_storage_account_name" {
-  value = azurerm_storage_account.vault_storage_account.name
-}
-
-output "_0_storage_container_name" {
-  value = azurerm_storage_container.vault_data.name
-}
-
-output "_0_storage_account_key" {
-  value = nonsensitive(azurerm_storage_account.vault_storage_account.primary_access_key)
-}
-
 output "_0_vault_config_upload" {
   value = "az storage file upload --account-name ${azurerm_storage_account.vault_storage_account.name} --share-name ${azurerm_storage_share.vault_config.name} --source vault-server.hcl"
 }

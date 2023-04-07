@@ -1,8 +1,7 @@
 # README
 
 ## Deployment
-#### 0 - Populate and Upload `vault-server.hcl` to File Share
-You will require some values to populate your own Vault config file (you can use [`vault-server.hcl.template`](./vault-server.hcl.template) as reference for your config) and then upload it to the file share:
+#### 0 - Upload `vault-server.hcl` to File Share
 ```console
 az storage file upload --account-name ${STORAGE_ACCOUNT_NAME} --share-name ${STORAGE_SHARE_NAME} --source vault-server.hcl
 ```
@@ -97,7 +96,7 @@ az container create --resource-group ${RG_NAME} \
 #### 3 - Initialize Vault
 ```console
 export VAULT_ADDR="http://${ACI_NAME}.${AZURE_LOCATION}.azurecontainer.io:8200"
-curl -s -X PUT ${VAULT_ADDR}/v1/sys/init --data @init.json
+curl -s -X POST ${VAULT_ADDR}/v1/sys/init --data @init.json
 ```
 
 **NOTE:** it may take a few minutes for the provided URL to resolve, so if initialization doesn't work initially, wait a little and then try again

@@ -3,15 +3,30 @@
 ## Deployment
 #### 0 - Populate and Upload `vault-server.hcl` to File Share
 You will require some values to populate your own Vault config file (you can use [`vault-server.hcl.template`](./vault-server.hcl.template) as reference for your config) and then upload it to the file share:
-```
+```console
 az storage file upload --account-name ${STORAGE_ACCOUNT_NAME} --share-name ${STORAGE_SHARE_NAME} --source vault-server.hcl
+```
+
+- example output:
+```
+Finished[#############################################################]  100.0000%
+{
+  "content_md5": "0x1c0x470xe20x630x890x500x2f0xc50xaa0x6c0x790xb20xc90x4a0x60x8c",
+  "date": "2023-04-07T02:16:14+00:00",
+  "etag": "\"0x8DB370E10807CFE\"",
+  "file_last_write_time": "2023-04-07T02:16:14.8983038Z",
+  "last_modified": "2023-04-07T02:16:14+00:00",
+  "request_id": "4b000ac2-001a-005f-48f6-68dbf6000000",
+  "request_server_encrypted": true,
+  "version": "2021-06-08"
+}
 ```
 
 **NOTE:** we are passing the settings for auto-unseal via environment variables at ACI creation time (see below)
 
 
 #### 1 - Build the Image
-```
+```console
 az acr build --image vault:1.11.2 --registry ${ACR_NAME} --file Dockerfile . 
 ```
 
@@ -58,7 +73,7 @@ Run ID: cw1 was successful after 37s
 
 #### 2 - Deploy Vault on ACI
 - your ACI create command that's specific to you should be in the Terraform output
-```
+```console
 az container create --resource-group ${RG_NAME} \
   --name ${ACI_NAME} \
   --image ${ACR_NAME}/vault:1.11.2 \
@@ -80,7 +95,7 @@ az container create --resource-group ${RG_NAME} \
 
 
 #### 3 - Initialize Vault
-```
+```console
 export VAULT_ADDR="http://${ACI_NAME}.${AZURE_LOCATION}.azurecontainer.io:8200"
 curl -s -X PUT ${VAULT_ADDR}/v1/sys/init --data @init.json
 ```
@@ -93,13 +108,13 @@ Azure Container Instances does not support/provide a managed SSL cert option (wh
 
 ## Clean up
 #### 1 - Delete ACI
-```
+```console
 az container delete --resource-group ${RG_NAME} --name ${ACI_NAME}
 ```
 
 #### 2 - Destroy Resources
-```
+```console
 terraform destroy -auto-approve
 ```
 
-**NOTE:** you may encounter an error with deleting the AKV key, but running the destroy command again will complete the second time. I don't use Azure enough to know whether this is a known bug with Azure itself or if it's Terraform (or both!)
+**NOTE:** you may encounter an error with deleting the AKV key with Terraform because of [this issue](https://github.com/hashicorp/terraform-provider-azurerm/issues/19307)

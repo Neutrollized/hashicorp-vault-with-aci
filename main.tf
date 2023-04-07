@@ -74,34 +74,39 @@ resource "azurerm_key_vault" "vault_akv" {
   soft_delete_retention_days = var.soft_delete_retention_days
   purge_protection_enabled   = false
 
-  access_policy {
-    tenant_id = data.azurerm_client_config.current.tenant_id
-    object_id = azurerm_user_assigned_identity.vault_user.principal_id
-
-    key_permissions = [
-      "Get",
-      "WrapKey",
-      "UnwrapKey",
-    ]
-  }
-
-  access_policy {
-    tenant_id = data.azurerm_client_config.current.tenant_id
-    object_id = data.azurerm_client_config.current.object_id
-
-    key_permissions = [
-      "Create",
-      "Delete",
-      "Get",
-      "List",
-      "Update",
-    ]
-  }
-
   network_acls {
     default_action = "Allow"
     bypass         = "AzureServices"
   }
+}
+
+resource "azurerm_key_vault_access_policy" "akv_ap" {
+  key_vault_id = azurerm_key_vault.vault_akv.id
+  tenant_id    = data.azurerm_client_config.current.tenant_id
+  object_id    = data.azurerm_client_config.current.object_id
+
+  key_permissions = [
+    "Create",
+    "Delete",
+    "Get",
+    "List",
+    "Purge",
+    "Update",
+    "GetRotationPolicy",
+  ]
+}
+
+resource "azurerm_key_vault_access_policy" "vault_user_akv_ap" {
+  key_vault_id = azurerm_key_vault.vault_akv.id
+  tenant_id    = data.azurerm_client_config.current.tenant_id
+  object_id    = azurerm_user_assigned_identity.vault_user.principal_id
+
+  key_permissions = [
+    "Get",
+    "WrapKey",
+    "UnwrapKey",
+    "GetRotationPolicy",
+  ]
 }
 
 resource "azurerm_key_vault_key" "vault_key" {
@@ -118,6 +123,9 @@ resource "azurerm_key_vault_key" "vault_key" {
     "verify",
     "wrapKey",
   ]
+
+  # https://github.com/hashicorp/terraform-provider-azurerm/issues/4569#issuecomment-611488341
+  depends_on = [azurerm_key_vault_access_policy.vault_user_akv_ap]
 }
 
 

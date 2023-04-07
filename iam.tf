@@ -20,8 +20,10 @@ resource "azurerm_role_assignment" "vault_user_akv_secrets_user" {
   principal_id         = azurerm_user_assigned_identity.vault_user.principal_id
 }
 
+#resource "azurerm_role_assignment" "vault_user_akv_crypto_officer" {
 resource "azurerm_role_assignment" "vault_user_akv_crypto_user" {
   scope                = azurerm_key_vault.vault_akv.id
   role_definition_name = "Key Vault Crypto User"
-  principal_id         = azurerm_user_assigned_identity.vault_user.principal_id
+  #role_definition_name = "Key Vault Crypto Officer"
+  principal_id = azurerm_user_assigned_identity.vault_user.principal_id
 }
